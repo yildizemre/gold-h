@@ -61,7 +61,7 @@ export default function Leads() {
       />
       <div className="mb-4 grid gap-4 lg:grid-cols-[1fr_auto]">
         <Card>
-          <CardHead title="Admin anahtarı" sub="Vercel'de tanımladığınız ADMIN_KEY" icon={KeyRound} />
+          <CardHead title="Admin anahtarı" sub="Admin şifresi" icon={KeyRound} />
           <form
             onSubmit={(e) => {
               e.preventDefault();

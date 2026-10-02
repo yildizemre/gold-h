@@ -30,6 +30,7 @@ export default function App() {
         {/* the deck is shareable without logging in */}
         <Route path="/sunum" element={<Presentation />} />
         <Route path="/iletisim" element={<LeadForm />} />
+        <Route path="/admin" element={<div className="min-h-full bg-bg p-4 sm:p-6"><Leads /></div>} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     );
@@ -47,7 +48,7 @@ export default function App() {
         {CATS.map((c) => (
           <Route key={c} path={CAT_META[c].to} element={page(c, <ModulePage key={c} cat={c} />)} />
         ))}
-        <Route path="/admin" element={page("leads", <Leads />)} />
+        <Route path="/admin" element={<Leads />} />
         <Route path="/oneriler" element={page("proposals", <Proposals />)} />
         <Route path="/cameras" element={page("cameras", <Cameras />)} />
         <Route path="/notifications" element={page("notifications", <Notifications />)} />

@@ -3,7 +3,7 @@ import { list } from "@vercel/blob";
 
 export default async function handler(req, res) {
   const key = req.headers["x-admin-key"] || req.query.key;
-  if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) return res.status(401).json({ ok: false, error: "Yetkisiz" });
+  if (key !== (process.env.ADMIN_KEY || "emre1234")) return res.status(401).json({ ok: false, error: "Yetkisiz" });
   const out = [];
   let cursor;
   do {
