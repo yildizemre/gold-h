@@ -19,6 +19,10 @@ export default async function handler(req, res) {
   if (!lead.name || !lead.company || !/^\S+@\S+\.\S+$/.test(lead.email) || lead.phone.length < 7)
     return res.status(400).json({ ok: false, error: "Lütfen tüm alanları doldurun." });
 
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    console.error("BLOB_READ_WRITE_TOKEN yok: Vercel > Storage > Blob store oluşturup projeye bağlayın, sonra Redeploy.");
+    return res.status(500).json({ ok: false, error: "Kayıt deposu bağlı değil (Vercel Blob). Lütfen standa bildirin." });
+  }
   const result = { saved: false };
 
   // 3 deneme: fuar ağında anlık kopmalara karşı
