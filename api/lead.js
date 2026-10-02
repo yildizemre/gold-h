@@ -25,18 +25,21 @@ export default async function handler(req, res) {
   }
   const result = { saved: false };
 
-  // 3 deneme: fuar ağında anlık kopmalara karşı
-  for (let i = 0; i < 3 && !result.saved; i++) try {
-    await put(`leads/${lead.at.replace(/[:.]/g, "-")}-${Math.random().toString(36).slice(2, 7)}.json`, JSON.stringify(lead), {
-      access: "public",
-      contentType: "application/json",
-      addRandomSuffix: false,
-    });
-    result.saved = true;
-  } catch (e) {
-    console.error("blob", e?.message);
+  const path = `leads/${lead.at.replace(/[:.]/g, "-")}-${Math.random().toString(36).slice(2, 7)}.json`;
+  let lastErr = "";
+  // 3 deneme · store private ya da public olabilir, ikisini de dene
+  for (let i = 0; i < 3 && !result.saved; i++) {
+    for (const access of ["private", "public"]) {
+      if (result.saved) break;
+      try {
+        await put(path, JSON.stringify(lead), { access, contentType: "application/json", addRandomSuffix: false, allowOverwrite: true });
+        result.saved = true;
+      } catch (e) {
+        lastErr = e?.message || String(e);
+        console.error("blob", access, lastErr);
+      }
+    }
   }
-
-  if (!result.saved) return res.status(500).json({ ok: false, error: "Kayıt şu an alınamadı, lütfen standa bildirin." });
+  if (!result.saved) return res.status(500).json({ ok: false, error: "Kayıt şu an alınamadı: " + lastErr });
   return res.status(200).json({ ok: true, ...result });
 }

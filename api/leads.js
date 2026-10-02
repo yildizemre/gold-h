@@ -1,22 +1,40 @@
 /** GET /api/leads — admin listesi (header x-admin-key = ADMIN_KEY env). ?format=csv ile Excel'e uygun CSV. */
-import { list } from "@vercel/blob";
+import { get, list } from "@vercel/blob";
+
+async function readBlob(b) {
+  for (const access of ["private", "public"]) {
+    try {
+      const r = await get(b.pathname, { access });
+      if (r && r.statusCode === 200) return JSON.parse(await new Response(r.stream).text());
+    } catch {
+      /* try next */
+    }
+  }
+  return JSON.parse(await (await fetch(b.url, { cache: "no-store" })).text());
+}
 
 export default async function handler(req, res) {
   const key = req.headers["x-admin-key"] || req.query.key;
   if (key !== (process.env.ADMIN_KEY || "emre1234")) return res.status(401).json({ ok: false, error: "Yetkisiz" });
+  if (!process.env.BLOB_READ_WRITE_TOKEN)
+    return res.status(500).json({ ok: false, error: "Vercel Blob bağlı değil: Vercel > Storage > Create > Blob > projeye bağla > Redeploy." });
   const out = [];
   let cursor;
+  try {
   do {
     const r = await list({ prefix: "leads/", cursor, limit: 1000 });
     for (const b of r.blobs) {
       try {
-        out.push(await (await fetch(b.url, { cache: "no-store" })).json());
+        out.push(await readBlob(b));
       } catch {
         /* skip broken */
       }
     }
     cursor = r.hasMore ? r.cursor : undefined;
   } while (cursor);
+  } catch (e) {
+    return res.status(500).json({ ok: false, error: "Depo okunamadı: " + (e?.message || e) });
+  }
   out.sort((a, b) => (a.at < b.at ? 1 : -1));
   if (req.query.format === "csv") {
     const q = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;

@@ -24,9 +24,15 @@ export default function Leads() {
     setErr("");
     try {
       const r = await fetch("/api/leads", { headers: { "x-admin-key": k } });
-      const j = await r.json();
+      const txt = await r.text();
+      let j: { ok?: boolean; error?: string; leads?: Lead[] } = {};
+      try {
+        j = JSON.parse(txt);
+      } catch {
+        throw new Error(`Sunucu hatası (${r.status})`);
+      }
       if (!r.ok) throw new Error(j.error || "Hata");
-      setLeads(j.leads);
+      setLeads(j.leads ?? []);
       try {
         localStorage.setItem("hvg.adminKey", k);
       } catch {
