@@ -47,7 +47,7 @@ export const DEMO_ROLES: DemoRole[] = [
     id: "center",
     name: "Selin Arslan",
     title: "Üretim İzleme Merkezi Operatörü",
-    scope: "7 modül · bildirim · kanıt · kamera altyapısı",
+    scope: "6 modül · bildirim · kanıt · kamera altyapısı",
     email: "izleme@hypevision.demo",
     initials: "SA",
     allowed: "*",

@@ -16,20 +16,20 @@ const routed = INCIDENTS.filter((i) => i.routedIn != null);
 const AVG_ROUTE = routed.reduce((a, b) => a + (b.routedIn ?? 0), 0) / routed.length;
 
 export const AI_BRIEF = [
-  `Bugün 00:00'dan bu yana **${INCIDENTS.length} görüntülü AI bildirimi** üretildi: ${sevCount("critical")} kritik, ${sevCount("warning")} uyarı, ${sevCount("info")} bilgi. Bildirimler ortalama **${n(AVG_ROUTE, 1)} saniyede** ilgili sorumluya ulaştı.`,
-  "Gece **02:14'te kuzey çitte ihlal** oldu, güvenlik 2 dakikada sahadaydı. **00:48'de kasa koridorunda** güvenlik dışı bir kişi tespit edildi — tutanak tutuldu.",
-  "**CNC-04 çıkışında TRAY-07'de 1 ürün eksik**: 14:32'de 24/24 sayılan tepsi 14:36'da 23. CNC-07'de 14 ürünsüz kapak açılışı, hurda oranı **%3,8**.",
-  "**TRAY-024'te adet tam (24/24) ama −1,72 g** ağırlık farkı; **TRAY-018 rotadan çıkıp yetkisiz bölgeye** girdi; transfer istasyonunda **18 → 17**.",
-  "Bugün **3.912 g takoz** geri eritmeye gitti; Tezgâh B hurda kovası **tartılmadan** bölümden çıktı.",
-  "Paketlemede **2.346 ürün**, **38 sipariş klibi**; 2 sayım farkı koli kapanmadan yakalandı.",
-  "Mesai bitti (17:30), **Tezgâh B'de 2 kişi** onaysız fazla mesaide.",
+  `Bugün **${INCIDENTS.length} görüntülü AI bildirimi** üretildi: ${sevCount("critical")} kritik, ${sevCount("warning")} uyarı, ${sevCount("info")} bilgi. Bildirimler ortalama **${n(AVG_ROUTE, 1)} saniyede** ilgili sorumluya ulaştı.`,
+  "**Adet doğru, gram yanlış:** TRAY-077'de 20/20 ürün ama **−2,65 g**; TRAY-024'te 24/24 ürün ama **−1,72 g**.",
+  "**TRAY-018 rotadan çıkıp yetkisiz bölgeye** girdi; 15:46'da **PERSON-014 yüksek değerli ürün alanına** yetkisiz girdi.",
+  "**FIRE-BOX-02 yerinden yetkisiz taşındı** (15:34); OBJECT-191 kontrollü ürün alanı dışına çıktı.",
+  "CNC-04 çıkışında TRAY-07'de **1 ürün eksik** (24 → 23); transfer istasyonunda **18 → 17**; paketlemede **12 → 11**.",
+  "Tartı-01 önünde **4 tepsi kuyrukta**, ortalama bekleme **08:42** — darboğaz tartıda.",
+  "PACKAGE-018 ağırlık ve mühür doğrulanarak **kasaya teslim edildi** (16:18).",
 ];
 
 const ACTIONS = [
-  { t: "CNC-04 TRAY-07 · eksik 1 ürünü klipten bul", to: "/cnc", tone: "danger" as const },
-  { t: "Tezgâh B hurda kovasını kasada tart", to: "/takoz-hurda", tone: "danger" as const },
-  { t: "TRAY-12 · transferde eksilen 1 ürünü kontrol et", to: "/izlenebilirlik", tone: "danger" as const },
-  { t: "Tezgâh B fazla mesai onayını gir ya da bölümü kapat", to: "/mesai-disi", tone: "warn" as const },
+  { t: "TRAY-077 ve TRAY-024 · gram farkını tek tek tartarak incele", to: "/izlenebilirlik", tone: "danger" as const },
+  { t: "FIRE-BOX-02'yi yerine al, taşıyanla görüş", to: "/takoz-hurda", tone: "danger" as const },
+  { t: "PERSON-014 kritik bölge girişi · kayda al", to: "/cevre-guvenlik", tone: "danger" as const },
+  { t: "Tartı-01'e ikinci operatör · kuyruk 4 tepsi", to: "/personel", tone: "warn" as const },
   { t: "Yeni CCTV modüllerini incele · 12 öneri", to: "/oneriler", tone: "accent" as const },
 ];
 
@@ -50,7 +50,7 @@ const HOURLY_SERIES = [
 ];
 
 /** Headline value of each module for the module strip. */
-const HEADLINE: Record<string, number> = { trace: 2, cnc: 2, staff: 0, scrap: 0, perimeter: 1, afterhours: 0, packing: 0 };
+const HEADLINE: Record<string, number> = { trace: 3, cnc: 2, staff: 0, scrap: 3, perimeter: 1, afterhours: 0, packing: 2 };
 
 export default function Dashboard() {
   const nav = useNavigate();
@@ -136,7 +136,7 @@ export default function Dashboard() {
       </div>
 
       {/* Module strip */}
-      <SectionTitle>7 modül · bugün</SectionTitle>
+      <SectionTitle>6 modül · bugün</SectionTitle>
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {CATS.map((c) => {
           const meta = CAT_META[c];

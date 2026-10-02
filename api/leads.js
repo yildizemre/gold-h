@@ -1,10 +1,11 @@
 /** GET /api/leads — admin listesi (header x-admin-key = ADMIN_KEY env). ?format=csv ile Excel'e uygun CSV. */
 import { get, list } from "@vercel/blob";
+const TOKEN = process.env.BLOB_READ_WRITE_TOKEN || Object.entries(process.env).find(([k]) => k.endsWith("READ_WRITE_TOKEN"))?.[1];
 
 async function readBlob(b) {
   for (const access of ["private", "public"]) {
     try {
-      const r = await get(b.pathname, { access });
+      const r = await get(b.pathname, { access, token: TOKEN });
       if (r && r.statusCode === 200) return JSON.parse(await new Response(r.stream).text());
     } catch {
       /* try next */
@@ -16,13 +17,13 @@ async function readBlob(b) {
 export default async function handler(req, res) {
   const key = req.headers["x-admin-key"] || req.query.key;
   if (key !== (process.env.ADMIN_KEY || "emre1234")) return res.status(401).json({ ok: false, error: "Yetkisiz" });
-  if (!process.env.BLOB_READ_WRITE_TOKEN)
+  if (!TOKEN)
     return res.status(500).json({ ok: false, error: "Vercel Blob bağlı değil: Vercel > Storage > Create > Blob > projeye bağla > Redeploy." });
   const out = [];
   let cursor;
   try {
   do {
-    const r = await list({ prefix: "leads/", cursor, limit: 1000 });
+    const r = await list({ prefix: "leads/", cursor, limit: 1000, token: TOKEN });
     for (const b of r.blobs) {
       try {
         out.push(await readBlob(b));

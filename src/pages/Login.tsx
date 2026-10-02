@@ -5,11 +5,11 @@ import { DEMO_ROLES, useAuth } from "../auth";
 import { CityChip, Logo } from "../components/Layout";
 import { CITY } from "../data/city";
 import { Shot } from "../components/incident";
-import { incidentByNo } from "../data/incidents";
+import { incidentBySlug } from "../data/incidents";
 import { cx } from "../lib/util";
 import { LeadQR } from "../components/LeadQR";
 
-const STILLS = [4, 6, 3, 5].map(incidentByNo);
+const STILLS = ["sayim-dogru-gram-yanlis", "cnc-kapak-acildi", "paketleme-eksik", "kritik-bolge-ihlali"].map(incidentBySlug);
 
 export default function Login() {
   const { login } = useAuth();
@@ -43,7 +43,7 @@ export default function Login() {
             Atölyenizdeki her gram, kamerayla kayıt altında.
           </h1>
           <p className="mt-4 max-w-[520px] text-[15px] leading-relaxed text-dim">
-            Tartı ve barkoddan CNC kapağına, takoz ve hurdadan çevre çitine, paketleme klibinden mesai dışı girişe — mevcut kameralarınızı 7 modülde ölçülebilir veriye ve kanıta dönüştürüyoruz.
+            Tartı ve barkoddan CNC kapağına, fire kutusundan kritik bölgeye, paketlemeden kasa teslimine — mevcut kameralarınızı 6 modülde ölçülebilir veriye ve kanıta dönüştürüyoruz.
           </p>
 
           <div className="mt-7 grid grid-cols-2 gap-3">
@@ -54,9 +54,9 @@ export default function Login() {
 
           <div className="mt-8 flex flex-wrap gap-8">
             {[
-              { v: "7", t: "modül · tek platform" },
+              { v: "6", t: "modül · tek platform" },
               { v: "72", t: "mevcut kamera · yeni yatırım yok" },
-              { v: "27", t: "görüntülü AI bildirim türü" },
+              { v: "23", t: "görüntülü AI bildirim türü" },
             ].map((s) => (
               <div key={s.t}>
                 <div className="num text-[26px] font-bold text-accent">{s.v}</div>

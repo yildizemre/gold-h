@@ -5,7 +5,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, FileDown, LayoutDashboard, Maximize, Printer, X } from "lucide-react";
-import { CAT_META, CATS, INCIDENTS, incidentByNo, incidentsOf, type Cat, type Incident } from "../data/incidents";
+import { CAT_META, CATS, INCIDENTS, incidentByNo, incidentBySlug, incidentsOf, type Cat, type Incident } from "../data/incidents";
 import { MODULES } from "../data/modules";
 import { PROPOSALS } from "../data/proposals";
 import { Photo } from "../components/incident";
@@ -306,11 +306,11 @@ const MOD_COPY: Record<Cat, { title: ReactNode; steps: string[]; output: ReactNo
   perimeter: {
     title: (
       <>
-        Çitte ihlal olduğu an <span className="text-grad">güvenlik biliyor</span>
+        Kritik bölgeye kim girdi, <span className="text-grad">hangi ürün dışarı çıktı?</span>
       </>
     ),
-    steps: ["Çite tırmanma, atlama ve kesmeyi tespit eder", "Çit dışında şüpheli bekleyen kişi / aracı izler", "Devriye kontrol noktalarını doğrular", "Kedi, yaprak, far gibi yanlış alarmları eler"],
-    output: <>02:14 kuzey çit ihlali → 3 sn'de güvenlik kulübesinde, ekip 2 dk'da sahada.</>,
+    steps: ["Kasa ve yüksek değerli alanları sanal bölge yapar", "Yetkisiz kişi girişini anında bildirir", "Kontrollü alan dışına çıkan ürünü yakalar", "Ürünün son görüldüğü tepsiyle eşleştirir"],
+    output: <>15:46 PERSON-014 yüksek değerli alanda → 3 sn'de güvenlikte; OBJECT-191 alan dışında → TRAY-054'e geri.</>,
     kpi: [1, 2, 3, 4],
   },
   afterhours: {
@@ -341,7 +341,7 @@ const moduleSlide = (c: Cat): { name: string; section: string; render: SlideFn }
   const copy = MOD_COPY[c];
   return {
     name: meta.short,
-    section: `Modül ${meta.no} / 7`,
+    section: `Modül ${meta.no} / 6`,
     render: (zoom) => (
       <ModuleSlide
         kicker={`${meta.no} · ${meta.label}`}
@@ -378,7 +378,7 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
     name: "Kapak",
     section: "",
     render: () => {
-      const stack = [4, 6, 3].map(incidentByNo);
+      const stack = ["sayim-dogru-gram-yanlis", "cnc-kapak-acildi", "paketleme-dogrulandi"].map(incidentBySlug);
       return (
         <Frame>
           <div className="grid size-full grid-cols-[1fr_560px] gap-6 px-24 py-20">
@@ -394,10 +394,10 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
                   <span className="text-grad">kamerayla kayıt altında.</span>
                 </Title>
                 <p className="rise mt-8 max-w-[780px] text-[23px] leading-relaxed text-white/65" style={d(320)}>
-                  Tartı ve barkoddan CNC kapağına, takoz ve hurdadan çevre çitine, mesai dışı girişten paketleme klibine kadar — mevcut kameralarınızı yapay zekâ ile 7 modülde ölçülebilir veriye ve kanıta dönüştürüyoruz.
+                  Tartı ve barkoddan CNC kapağına, fire kutusundan kritik bölgeye, paketlemeden kasa teslimine kadar — mevcut kameralarınızı yapay zekâ ile 6 modülde ölçülebilir veriye ve kanıta dönüştürüyoruz.
                 </p>
                 <div className="rise mt-10 flex gap-3" style={d(440)}>
-                  {["7 modül · tek platform", "Mevcut kameralar", "Görüntü tesiste kalır", "30 gün pilot"].map((t) => (
+                  {["6 modül · tek platform", "Mevcut kameralar", "Görüntü tesiste kalır", "30 gün pilot"].map((t) => (
                     <span key={t} className="rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 text-[16px] font-semibold text-white/80">
                       {t}
                     </span>
@@ -557,7 +557,7 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
     ),
   },
   {
-    name: "7 modül",
+    name: "6 modül",
     section: "Platform",
     render: (_z, go) => (
       <Frame>
@@ -566,7 +566,7 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
             <div>
               <Kicker>Tek platform</Kicker>
               <Title size={52}>
-                <span className="text-grad">7 modül</span>, tek panel, mevcut kameralar
+                <span className="text-grad">6 modül</span>, tek panel, mevcut kameralar
               </Title>
             </div>
             <div className="rise pb-2 text-right text-[17px] text-white/55" style={d(200)}>
@@ -636,10 +636,10 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
             </ol>
           </div>
           <div className="flex flex-col justify-center gap-4">
-            <Pic inc={incidentByNo(1)} onZoom={zoom} delay={200} aspect="16/10" />
+            <Pic inc={incidentBySlug("parti-a-z-takip")} onZoom={zoom} delay={200} aspect="16/10" />
             <div className="grid grid-cols-2 gap-4">
-              <Pic inc={incidentByNo(2)} onZoom={zoom} delay={320} compact />
-              <Pic inc={incidentByNo(19)} onZoom={zoom} delay={420} compact />
+              <Pic inc={incidentBySlug("tarti-agirlik-farki")} onZoom={zoom} delay={320} compact />
+              <Pic inc={incidentBySlug("paketleme-dogrulandi")} onZoom={zoom} delay={420} compact />
             </div>
             <div className="grid grid-cols-3 gap-3">
               <Kpi v="6" l="kontrol noktası" delay={500} />
@@ -721,7 +721,7 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
             <Kpi v="38" l="paketleme klibi · siparişe bağlı" tone="green" delay={650} />
           </div>
           <Glass delay={760} glow={GOLD} className="mt-6 p-6 text-[19px] leading-relaxed text-white/75">
-            Gece kuzey çit ihlali, CNC çıkış tepsisindeki eksik ürün ve tartılmadan çıkan hurda kovası — üçü de <b className="text-white">kimse fark etmeden önce</b> ilgili sorumlunun ekranındaydı.
+            Adet doğru gram yanlış tepsiler, yerinden taşınan fire kutusu ve kritik bölgeye yetkisiz giriş — üçü de <b className="text-white">kimse fark etmeden önce</b> ilgili sorumlunun ekranındaydı.
           </Glass>
           <div className="mt-5 grid grid-cols-7 gap-3">
             {CATS.map((c, k) => {
@@ -860,7 +860,7 @@ const SLIDES: { name: string; section: string; render: SlideFn }[] = [
             </Title>
           </div>
           <p className="rise mt-6 text-[22px] text-white/60" style={d(280)}>
-            Üretim Özeti · Bildirimler · 7 Modül · Öneri Modüller · Olay & Kanıt Merkezi · Raporlar
+            Üretim Özeti · Bildirimler · 6 Modül · Öneri Modüller · Olay & Kanıt Merkezi · Raporlar
           </p>
           <div className="rise mt-12 flex gap-4" style={d(400)}>
             <button onClick={() => go("/")} className="rounded-2xl px-9 py-4 text-[21px] font-bold text-[#04161a] transition hover:brightness-110" style={{ background: CYAN, boxShadow: `0 20px 50px -15px ${CYAN}` }}>

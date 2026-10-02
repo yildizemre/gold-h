@@ -3,6 +3,7 @@
  * Env: BLOB_READ_WRITE_TOKEN (Vercel Blob bağlanınca otomatik), ADMIN_KEY (admin listesi için)
  */
 import { put } from "@vercel/blob";
+const TOKEN = process.env.BLOB_READ_WRITE_TOKEN || Object.entries(process.env).find(([k]) => k.endsWith("READ_WRITE_TOKEN"))?.[1];
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ ok: false });
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
   if (!lead.name || !lead.company || !/^\S+@\S+\.\S+$/.test(lead.email) || lead.phone.length < 7)
     return res.status(400).json({ ok: false, error: "Lütfen tüm alanları doldurun." });
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  if (!TOKEN) {
     console.error("BLOB_READ_WRITE_TOKEN yok: Vercel > Storage > Blob store oluşturup projeye bağlayın, sonra Redeploy.");
     return res.status(500).json({ ok: false, error: "Kayıt deposu bağlı değil (Vercel Blob). Lütfen standa bildirin." });
   }
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
     for (const access of ["private", "public"]) {
       if (result.saved) break;
       try {
-        await put(path, JSON.stringify(lead), { access, contentType: "application/json", addRandomSuffix: false, allowOverwrite: true });
+        await put(path, JSON.stringify(lead), { access, contentType: "application/json", addRandomSuffix: false, allowOverwrite: true, token: TOKEN });
         result.saved = true;
       } catch (e) {
         lastErr = e?.message || String(e);

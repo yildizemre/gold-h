@@ -10,7 +10,7 @@ import { MODULES } from "../data/modules";
 import { cx, n } from "../lib/util";
 
 /** Slide of the deck that belongs to each module (see Presentation.tsx). */
-const SLIDE_OF: Record<Cat, number> = { trace: 6, cnc: 7, staff: 8, scrap: 9, perimeter: 10, afterhours: 11, packing: 12 };
+const SLIDE_OF: Record<Cat, number> = { trace: 6, cnc: 7, staff: 8, scrap: 9, perimeter: 10, afterhours: 11, packing: 11 };
 
 export default function ModulePage({ cat }: { cat: Cat }) {
   const nav = useNavigate();
