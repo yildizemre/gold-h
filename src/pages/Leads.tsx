@@ -47,7 +47,7 @@ export default function Leads() {
     <div className="fade-up">
       <PageHead
         title="Admin · Fuar Lead'leri"
-        sub="QR formundan gelen kayıtlar · her kayıt ayrıca e-posta ile size iletilir"
+        sub="QR formundan gelen kayıtlar · Vercel Blob'da kalıcı saklanır · CSV ile indirin"
         right={
           <>
             <Btn icon={RefreshCw} onClick={() => load()}>{busy ? "Yükleniyor…" : "Yenile"}</Btn>

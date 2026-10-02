@@ -48,7 +48,7 @@ export default function LeadForm() {
           <h1 className="mt-2 text-[27px] font-extrabold leading-tight">
             Atölyenizdeki her gram, <span className="text-[#E8B931]">kamerayla kayıt altında.</span>
           </h1>
-          <p className="mt-3 text-[14px] leading-relaxed text-white/70">Bilgilerinizi bırakın; size tanıtım sunumunu gönderelim ve atölyenize özel bir toplantı planlayalım.</p>
+          <p className="mt-3 text-[14px] leading-relaxed text-white/70">Bilgilerinizi bırakın; sizinle iletişime geçelim ve atölyenize özel bir tanıtım toplantısı planlayalım.</p>
         </div>
       </div>
 
@@ -58,7 +58,7 @@ export default function LeadForm() {
             <CheckCircle2 size={44} className="mx-auto text-ok" />
             <h2 className="mt-3 text-[21px] font-bold">Teşekkürler {f.name.split(" ")[0]}!</h2>
             <p className="mt-2 text-[14px] leading-relaxed text-dim">
-              Bilgileriniz bize ulaştı. <b>{f.email}</b> adresine tanıtım e-postamızı gönderdik; en kısa sürede sizinle iletişime geçeceğiz.
+              Bilgileriniz bize ulaştı. Ekibimiz en kısa sürede sizinle iletişime geçip tanıtım toplantısını planlayacak.
             </p>
             <a href="/sunum" className="mt-5 inline-flex h-11 items-center rounded-xl bg-accent px-5 text-[14px] font-bold text-[#04161a]">
               Sunumu incele →

@@ -13,7 +13,7 @@ export function LeadQR({ size = 168, className = "" }: { size?: number; classNam
       {src && <img src={src} alt="İletişim QR" style={{ width: size, height: size }} className="rounded-lg bg-white" />}
       <div className="max-w-[170px]">
         <div className="text-[13px] font-bold text-ink">Bilgi bırakın 📲</div>
-        <div className="mt-1 text-[11.5px] leading-snug text-mute">Telefonunuzla okutun; tanıtım sunumu ve toplantı daveti e-postanıza gelsin.</div>
+        <div className="mt-1 text-[11.5px] leading-snug text-mute">Telefonunuzla okutun, bilgilerinizi bırakın; sizinle iletişime geçelim.</div>
       </div>
     </div>
   );
