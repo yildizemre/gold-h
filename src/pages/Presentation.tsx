@@ -350,7 +350,7 @@ const moduleSlide = (c: Cat): { name: string; section: string; render: SlideFn }
         steps={copy.steps}
         kpis={copy.kpi.map((k) => ({ v: `${m.kpis[k].value}${m.kpis[k].unit ? ` ${m.kpis[k].unit}` : ""}`, l: m.kpis[k].label, tone: toTone(m.kpis[k].tone) }))}
         output={copy.output}
-        imgs={incidentsOf(c).map((i) => i.no)}
+        imgs={incidentsOf(c).slice(0, 4).map((i) => i.no)}
         onZoom={zoom}
       />
     ),

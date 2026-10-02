@@ -56,7 +56,7 @@ export default function Login() {
             {[
               { v: "7", t: "modül · tek platform" },
               { v: "72", t: "mevcut kamera · yeni yatırım yok" },
-              { v: "23", t: "görüntülü AI bildirim türü" },
+              { v: "27", t: "görüntülü AI bildirim türü" },
             ].map((s) => (
               <div key={s.t}>
                 <div className="num text-[26px] font-bold text-accent">{s.v}</div>

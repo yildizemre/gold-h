@@ -8,7 +8,7 @@ Ek: **Öneri Modüller** (`/oneriler`) — yalnızca CCTV ile eklenebilecek 12 a
 çıkış kontrolü, kamera sabotajı…). Müşteri her biri için "Evet, ekle" / "Şimdilik hayır" der; "Evet" yetki ekranını açar.
 Genel Müdür rolü yetki verip ekler, diğer roller onaya gönderir. Kararlar tarayıcıda saklanır, "Geri al" ile sıfırlanır.
 
-Demo günü: **2 Ekim 2026 Cuma 18:20** · 72 kamera · 23 görüntülü AI bildirimi (CNC 5, diğer modüller 3).
+Demo günü: **2 Ekim 2026 Cuma 18:20** · 72 kamera · 27 görüntülü AI bildirimi.
 
 ## Firmaya özel link
 

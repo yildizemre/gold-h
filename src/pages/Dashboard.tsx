@@ -19,7 +19,7 @@ export const AI_BRIEF = [
   `Bugün 00:00'dan bu yana **${INCIDENTS.length} görüntülü AI bildirimi** üretildi: ${sevCount("critical")} kritik, ${sevCount("warning")} uyarı, ${sevCount("info")} bilgi. Bildirimler ortalama **${n(AVG_ROUTE, 1)} saniyede** ilgili sorumluya ulaştı.`,
   "Gece **02:14'te kuzey çitte ihlal** oldu, güvenlik 2 dakikada sahadaydı. **00:48'de kasa koridorunda** güvenlik dışı bir kişi tespit edildi — tutanak tutuldu.",
   "**CNC-04 çıkışında TRAY-07'de 1 ürün eksik**: 14:32'de 24/24 sayılan tepsi 14:36'da 23. CNC-07'de 14 ürünsüz kapak açılışı, hurda oranı **%3,8**.",
-  "**PRT-24809** Cila → Paketleme geçişinde **−0,28 g** fark (tolerans ±0,15 g); 14:41'de transfer istasyonunda **18 → 17 sayım farkı**.",
+  "**TRAY-024'te adet tam (24/24) ama −1,72 g** ağırlık farkı; **TRAY-018 rotadan çıkıp yetkisiz bölgeye** girdi; transfer istasyonunda **18 → 17**.",
   "Bugün **3.912 g takoz** geri eritmeye gitti; Tezgâh B hurda kovası **tartılmadan** bölümden çıktı.",
   "Paketlemede **2.346 ürün**, **38 sipariş klibi**; 2 sayım farkı koli kapanmadan yakalandı.",
   "Mesai bitti (17:30), **Tezgâh B'de 2 kişi** onaysız fazla mesaide.",
