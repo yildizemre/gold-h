@@ -11,6 +11,8 @@ import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 import Presentation from "./pages/Presentation";
 import Proposals from "./pages/Proposals";
+import LeadForm from "./pages/LeadForm";
+import Leads from "./pages/Leads";
 import { CAT_META, CATS } from "./data/incidents";
 
 function Guard({ k, children }: { k: NavKey; children: React.ReactNode }) {
@@ -27,6 +29,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         {/* the deck is shareable without logging in */}
         <Route path="/sunum" element={<Presentation />} />
+        <Route path="/iletisim" element={<LeadForm />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     );
@@ -38,11 +41,13 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<Navigate to="/" replace />} />
       <Route path="/sunum" element={<Presentation />} />
+      <Route path="/iletisim" element={<LeadForm />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         {CATS.map((c) => (
           <Route key={c} path={CAT_META[c].to} element={page(c, <ModulePage key={c} cat={c} />)} />
         ))}
+        <Route path="/admin" element={page("leads", <Leads />)} />
         <Route path="/oneriler" element={page("proposals", <Proposals />)} />
         <Route path="/cameras" element={page("cameras", <Cameras />)} />
         <Route path="/notifications" element={page("notifications", <Notifications />)} />

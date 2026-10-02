@@ -12,6 +12,7 @@ export type NavKey =
   | "afterhours"
   | "packing"
   | "proposals"
+  | "leads"
   | "incidents"
   | "cameras"
   | "reports";

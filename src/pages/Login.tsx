@@ -7,6 +7,7 @@ import { CITY } from "../data/city";
 import { Shot } from "../components/incident";
 import { incidentByNo } from "../data/incidents";
 import { cx } from "../lib/util";
+import { LeadQR } from "../components/LeadQR";
 
 const STILLS = [4, 6, 3, 5].map(incidentByNo);
 
@@ -108,6 +109,9 @@ export default function Login() {
             <LogIn size={17} /> Giriş yap
           </button>
 
+          <div className="mt-5 flex justify-center">
+            <LeadQR size={120} />
+          </div>
           <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-[11.5px] text-mute">
             <Sparkles size={12} className="text-accent" /> Demo ortamı · şifre: demo
           </p>

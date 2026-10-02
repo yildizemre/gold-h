@@ -4,6 +4,7 @@ import {
   Bell,
   BellRing,
   Factory,
+  QrCode,
   Check,
   Clock,
   Cog,
@@ -53,6 +54,7 @@ const NAV_RAW: (Omit<NavItem, "no"> & { group?: string })[] = [
   { key: "incidents", label: "Olay & Kanıt Merkezi", icon: ShieldCheck, to: "/incidents", group: "Yönetim" },
   { key: "cameras", label: "Kamera Altyapısı", icon: Video, to: "/cameras" },
   { key: "reports", label: "Raporlar", icon: FileBarChart, to: "/reports" },
+  { key: "leads", label: "Admin · Fuar Lead'leri", icon: QrCode, to: "/admin" },
 ];
 const NAV: (NavItem & { group?: string })[] = NAV_RAW.map((x, i) => ({ ...x, no: String(i + 1).padStart(2, "0") }));
 

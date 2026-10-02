@@ -9,6 +9,7 @@ import { CAT_META, CATS, INCIDENTS, incidentsOf } from "../data/incidents";
 import { MODULES } from "../data/modules";
 import { useIncidents } from "../data/store";
 import { cx, n } from "../lib/util";
+import { LeadQR } from "../components/LeadQR";
 
 const sevCount = (s: string) => INCIDENTS.filter((i) => i.sev === s).length;
 const routed = INCIDENTS.filter((i) => i.routedIn != null);
@@ -78,6 +79,10 @@ export default function Dashboard() {
           </>
         }
       />
+
+      <div className="mb-4 flex justify-end">
+        <LeadQR size={96} />
+      </div>
 
       {/* AI summary */}
       <div className="relative mb-4 overflow-hidden rounded-2xl border border-accent/25 bg-panel p-4 sm:p-5">
